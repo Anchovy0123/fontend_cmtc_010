@@ -21,7 +21,7 @@ export default function LoginPage(){
     e.preventDefault();
     try{
       setLoading(true);
-      const data = await apiRequest('/api/auth/login', {
+      const data = await apiRequest('backend/routes/login', {
         method:'POST',
         body: { username, password },
         auth: false,

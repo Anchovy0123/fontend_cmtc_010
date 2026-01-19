@@ -27,7 +27,7 @@ export default function RegisterPage(){
     e.preventDefault();
     try{
       setLoading(true);
-      await apiRequest('/api/auth/register', {
+      await apiRequest('backend/routes/auth', {
         method:'POST',
         body: form,
         auth: false,
