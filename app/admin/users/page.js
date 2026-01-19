@@ -3,6 +3,9 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation'
 import { apiRequest, getAuthToken } from '@/lib/apiClient';
+import { API_BASE } from '@/lib/api';
+
+const API_ROOT = API_BASE.replace(/\/+$/, '').replace(/\/api$/, '');
 
 export default function User() {
   const [items, setItems] = useState([]);
@@ -19,7 +22,7 @@ export default function User() {
 
     async function getUsers() {
       try {
-        const data = await apiRequest('/api/users');
+        const data = await apiRequest(`${API_ROOT}/api/users`);
         setItems(data);
         setLoading(false); // <-- โหลดเสร็จแล้ว
       } catch (error) {
@@ -36,7 +39,7 @@ export default function User() {
 const handleDelete = async (id) => {
   //console.log('user id :', id);
   try {
-    const result = await apiRequest(`/api/users/${id}`, {
+    const result = await apiRequest(`${API_ROOT}/api/users/${id}`, {
       method: 'DELETE',
     });
     console.log(result);

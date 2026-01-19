@@ -4,12 +4,15 @@ import Link from 'next/link';
 import Swal from 'sweetalert2';
 import { Kanit } from 'next/font/google';
 import { apiRequest, setAuthToken } from '@/lib/apiClient';
+import { API_BASE } from '@/lib/api';
 
 const kanit = Kanit({
   subsets: ['thai','latin'],
   weight: ['400','600','700','800'],
   variable: '--font-kanit',
 });
+
+const API_ROOT = API_BASE.replace(/\/+$/, '').replace(/\/api$/, '');
 
 export default function LoginPage(){
   const [username, setUsername] = useState('');
@@ -21,7 +24,7 @@ export default function LoginPage(){
     e.preventDefault();
     try{
       setLoading(true);
-      const data = await apiRequest('backend/routes/login', {
+      const data = await apiRequest(`${API_ROOT}/api/auth/login`, {
         method:'POST',
         body: { username, password },
         auth: false,

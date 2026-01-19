@@ -5,12 +5,15 @@ import Link from 'next/link';
 import Swal from 'sweetalert2';
 import { Kanit } from 'next/font/google';
 import { apiRequest, setAuthToken } from '@/lib/apiClient';
+import { API_BASE } from '@/lib/api';
 
 const kanit = Kanit({
   subsets: ['thai','latin'],
   weight: ['400','600','700','800'],
   variable: '--font-kanit',
 });
+
+const API_ROOT = API_BASE.replace(/\/+$/, '').replace(/\/api$/, '');
 
 export default function SignInPage(){
   const router = useRouter();
@@ -23,7 +26,7 @@ export default function SignInPage(){
     e.preventDefault();
     try{
       setLoading(true);
-      const data = await apiRequest('/api/auth/login', {
+      const data = await apiRequest(`${API_ROOT}/api/auth/login`, {
         method:'POST',
         body: { username, password },
         auth: false,
@@ -36,8 +39,8 @@ export default function SignInPage(){
         await Swal.fire({ icon:'warning', title:'<h3>Login Failed!</h3>' });
         router.push('/signin');
       }
-    } catch {
-      await Swal.fire({ icon:'warning', title:'<h3>Login Failed!</h3>' });
+    } catch (error) {
+      await Swal.fire({ icon:'warning', title:'<h3>Login Failed!</h3>', text: error?.message });
       router.push('/signin');
     } finally { setLoading(false); }
   };

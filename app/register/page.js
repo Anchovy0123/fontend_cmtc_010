@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
 import { Kanit } from 'next/font/google';
 import { apiRequest } from '@/lib/apiClient';
+import { API_BASE } from '@/lib/api';
 
 const kanit = Kanit({
   subsets: ['thai','latin'],
@@ -16,6 +17,8 @@ const initialForm = {
   address:'', sex:'', birthday:'', password:''
 };
 
+const API_ROOT = API_BASE.replace(/\/+$/, '').replace(/\/api$/, '');
+
 export default function RegisterPage(){
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -27,7 +30,7 @@ export default function RegisterPage(){
     e.preventDefault();
     try{
       setLoading(true);
-      await apiRequest('backend/routes/auth', {
+      await apiRequest(`${API_ROOT}/api/auth/register`, {
         method:'POST',
         body: form,
         auth: false,

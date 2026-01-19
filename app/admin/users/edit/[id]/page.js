@@ -3,9 +3,11 @@ import { useEffect, useMemo, useState } from 'react'
 import Swal from 'sweetalert2'
 import { useParams, useRouter } from 'next/navigation'
 import { apiRequest } from '@/lib/apiClient'
+import { API_BASE } from '@/lib/api'
 
 // ✅ ใช้ endpoint ตามที่ขอแบบชัดเจน
-const USERS_API = '/api/users'
+const API_ROOT = API_BASE.replace(/\/+$/, '').replace(/\/api$/, '')
+const USERS_API = `${API_ROOT}/api/users`
 
 // แปลง "14/02/2545" -> "2002-02-14"
 function toInputDate(v) {
