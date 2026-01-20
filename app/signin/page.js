@@ -17,7 +17,7 @@ export default function SignInPage(){
     try{
       setLoading(true);
       const data = await login({ username, password });
-      if(data?.token){
+      if(data?.token || data?.ok){
         await Swal.fire({ icon:'success', title:'<h3>Login Successfully!</h3>', timer:1200, showConfirmButton:false });
         window.location.href = '/admin/users';
       }else{

@@ -15,7 +15,7 @@ export default function LoginPage(){
     try{
       setLoading(true);
       const data = await login({ username, password });
-      if(data?.token){
+      if(data?.token || data?.ok){
         await Swal.fire({ icon:'success', title:'<h3>Login Successfully!</h3>', timer:1200, showConfirmButton:false, background:'#fff', color:'#111' });
         window.location.href = '/admin/users';
       }else{

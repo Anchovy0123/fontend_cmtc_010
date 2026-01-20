@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Swal from '@/lib/swal';
 import { logout } from '@/lib/auth';
+import { getAuthSession } from '@/lib/apiClient';
 
 export default function Navigation() {
   const router = useRouter();
@@ -15,7 +16,7 @@ export default function Navigation() {
 
   // sync auth
   useEffect(() => {
-    const sync = () => setAuthed(!!localStorage.getItem('token'));
+    const sync = () => setAuthed(getAuthSession());
     sync();
     const onStorage = () => sync();
     const onFocus = () => sync();

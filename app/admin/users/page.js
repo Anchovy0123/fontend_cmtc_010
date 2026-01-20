@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation'
-import { apiRequest, getAuthToken } from '@/lib/apiClient';
+import { apiRequest, getAuthSession } from '@/lib/apiClient';
 
 export default function User() {
   const [items, setItems] = useState([]);
@@ -11,15 +11,15 @@ export default function User() {
 
   useEffect(() => {
 
-    const token = getAuthToken();
-     if (!token) {
+    const authed = getAuthSession();
+     if (!authed) {
        router.push('/signin');
        return;
      }
 
     async function getUsers() {
       try {
-        const data = await apiRequest('/api/users');
+        const data = await apiRequest('/users');
         setItems(data);
         setLoading(false); // <-- โหลดเสร็จแล้ว
       } catch (error) {
@@ -36,7 +36,7 @@ export default function User() {
 const handleDelete = async (id) => {
   //console.log('user id :', id);
   try {
-    const result = await apiRequest(`/api/users/${id}`, {
+    const result = await apiRequest(`/users/${id}`, {
       method: 'DELETE',
     });
     console.log(result);

@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { apiRequest } from '@/lib/apiClient'
 
 // ✅ ใช้ endpoint ตามที่ขอแบบชัดเจน
-const USERS_API = '/api/users'
+const USERS_API = '/users'
 
 // แปลง "14/02/2545" -> "2002-02-14"
 function toInputDate(v) {
@@ -72,7 +72,7 @@ export default function Page() {
   useEffect(() => {
     async function getUser() {
       try {
-        // ✅ GET โดยใช้ /api/users/:id
+        // ✅ GET โดยใช้ /users/:id
         const data = await apiRequest(`${USERS_API}/${id}`)
         const user = Array.isArray(data) ? (data[0] || {}) : data
         setInitialUser(user)
@@ -111,7 +111,7 @@ export default function Page() {
     e.preventDefault()
     setSubmitting(true)
     try {
-      // ✅ PUT ไปที่ /api/users (ตามที่ให้มา) โดยส่ง id ใน body
+      // ✅ PUT ไปที่ /users (ตามที่ให้มา) โดยส่ง id ใน body
       await apiRequest(USERS_API, {
         method: 'PUT',
         body: {
