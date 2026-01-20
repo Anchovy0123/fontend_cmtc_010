@@ -3,15 +3,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Swal from 'sweetalert2';
-import { Kanit } from 'next/font/google';
 import { apiRequest, setAuthToken } from '@/lib/apiClient';
 import { API_BASE } from '@/lib/api';
-
-const kanit = Kanit({
-  subsets: ['thai','latin'],
-  weight: ['400','600','700','800'],
-  variable: '--font-kanit',
-});
 
 const API_ROOT = API_BASE.replace(/\/+$/, '').replace(/\/api$/, '');
 
@@ -46,7 +39,7 @@ export default function SignInPage(){
   };
 
   return (
-    <div className={`auth-screen ak-yellow ${kanit.variable}`}>
+    <div className="auth-screen ak-yellow">
       <div className="auth-bg" aria-hidden />
       <div className="scanline" aria-hidden />
 

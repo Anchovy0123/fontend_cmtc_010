@@ -1,13 +1,6 @@
 'use client';
 import { useEffect, useRef, useState, useMemo } from 'react';
 import Image from 'next/image';
-import { Kanit } from 'next/font/google';
-
-const kanit = Kanit({
-  subsets: ['thai', 'latin'],
-  weight: ['400', '600', '700', '800'],
-  variable: '--font-kanit',
-});
 
 export default function ServicePage() {
   const rootRef = useRef(null);
@@ -223,7 +216,7 @@ export default function ServicePage() {
   }, []);
 
   return (
-    <div ref={rootRef} className={`service-screen ef-light ${kanit.variable}`}>
+    <div ref={rootRef} className="service-screen ef-light">
       {/* BG layers */}
       <video className="bg-video" autoPlay muted loop playsInline>
         <source src="/videos/endfield-hero.mp4" type="video/mp4" />

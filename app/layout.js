@@ -9,6 +9,7 @@ import './globals.css'
 import { Orbitron } from "next/font/google";
 import { Prompt } from "next/font/google";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Kanit } from "next/font/google";
 
 // โหลดฟอนต์
 const orbitron = Orbitron({
@@ -35,6 +36,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const kanit = Kanit({
+  subsets: ["thai", "latin"],
+  weight: ["400", "600", "700", "800"],
+  variable: "--font-kanit",
+});
+
 // Metadata หน้าเว็บ
 export const metadata = {
   title: "Rhodes Island",
@@ -51,6 +58,7 @@ export default function RootLayout({ children }) {
           ${geistSans.variable}
           ${geistMono.variable}
           ${orbitron.variable}
+          ${kanit.variable}
           d-flex flex-column min-vh-100
           ak-yellow
         `}
