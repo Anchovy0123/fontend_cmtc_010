@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useMemo, useState } from 'react'
-import Swal from 'sweetalert2'
+import Swal from '@/lib/swal'
 import { useParams, useRouter } from 'next/navigation'
 import { apiRequest } from '@/lib/apiClient'
 import { API_BASE } from '@/lib/api'

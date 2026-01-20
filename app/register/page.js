@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Swal from 'sweetalert2';
+import Swal from '@/lib/swal';
 import { apiRequest } from '@/lib/apiClient';
 import { API_BASE } from '@/lib/api';
 

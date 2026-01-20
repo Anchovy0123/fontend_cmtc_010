@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import Swal from 'sweetalert2';
+import Swal from '@/lib/swal';
 
 export default function Navigation() {
   const router = useRouter();

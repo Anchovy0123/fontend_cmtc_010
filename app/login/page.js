@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import Swal from 'sweetalert2';
+import Swal from '@/lib/swal';
 import { apiRequest, setAuthToken } from '@/lib/apiClient';
 import { API_BASE } from '@/lib/api';
 
