@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Swal from '@/lib/swal';
 import { logout } from '@/lib/auth';
-import { getAuthSession } from '@/lib/apiClient';
 
 export default function Navigation() {
   const router = useRouter();
@@ -16,7 +15,15 @@ export default function Navigation() {
 
   // sync auth
   useEffect(() => {
-    const sync = () => setAuthed(getAuthSession());
+    const readToken = () => {
+      if (typeof window === 'undefined') return null;
+      try {
+        return localStorage.getItem('token') || localStorage.getItem('access_token');
+      } catch {
+        return null;
+      }
+    };
+    const sync = () => setAuthed(!!readToken());
     sync();
     const onStorage = () => sync();
     const onFocus = () => sync();
@@ -123,6 +130,7 @@ export default function Navigation() {
     { name: 'Service', href: '/service' },
     { name: 'Contact', href: '/contact' },
     { name: 'About', href: '/about' },
+    ...(authed ? [{ name: 'Admin Users', href: '/admin/users' }] : []),
     { name: 'เข้าสู่ระบบ', href: '/login' },
   ];
 
