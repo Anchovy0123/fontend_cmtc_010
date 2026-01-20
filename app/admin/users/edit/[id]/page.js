@@ -271,7 +271,6 @@ export default function Page() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="อย่างน้อย 8 ตัวอักษร"
                   className="control"
-                  required
                 />
                 <button type="button" className="btn small ghost" onClick={() => setShowPw((s) => !s)}>
                   {showPw ? 'ซ่อน' : 'แสดง'}
