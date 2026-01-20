@@ -4,6 +4,7 @@ import Carousel from "./components/carousel";
 import Card from "./components/card";
 import Navigation from "./components/nav";
 import Footer from "./components/footer";
+import ScrollToTop from "./components/scroll-to-top";
 import './globals.css'
 // ฟอนต์จาก Google Fonts
 import { Orbitron } from "next/font/google";
@@ -66,6 +67,7 @@ export default function RootLayout({ children }) {
           fontFamily: "var(--font-prompt), var(--font-orbitron), sans-serif",
         }}
       >
+        <ScrollToTop />
         <Navigation />
         <main className="flex-grow-1">{children}</main>
         <Footer />
