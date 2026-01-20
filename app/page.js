@@ -68,7 +68,7 @@ export default function Home() {
           loop
           playsInline
           preload="metadata"
-          poster="/images/endfield/hero-poster.jpg"
+          poster="/images/rhodes-fallback.png"
         >
           <source
             src="/video/Arknights Endfield Beta Test Trailer - Arknights Endfield (1080p, h264).mp4"

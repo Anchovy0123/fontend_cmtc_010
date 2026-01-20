@@ -187,9 +187,14 @@ export default function Navigation() {
       <button
         type="button"
         className={`ef-backdrop ${menuOpen ? 'show' : ''}`}
-        aria-hidden={!menuOpen}
-        tabIndex={-1}
-        onClick={() => setMenuOpen(false)}
+        aria-label="Close menu"
+        inert={!menuOpen}
+        tabIndex={menuOpen ? 0 : -1}
+        onMouseDown={(e) => e.preventDefault()}
+        onClick={(e) => {
+          e.currentTarget.blur();
+          setMenuOpen(false);
+        }}
       />
 
       <style jsx>{`
