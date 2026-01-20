@@ -131,9 +131,10 @@
 }
 
 /* กลุ่มเมนูไปทางขวา */
+/* Mobile nav fix: let component CSS toggle the collapse panel. */
 .ef-collapse{
   margin-left:auto;           /* ⬅️ ทั้งกลุ่มไปขวา */
-  display:flex !important;
+  display:flex;
   align-items:center;
   gap:16px;
 }
@@ -372,5 +373,3 @@
 .ef-menu .nav-item:nth-child(6) { --i: 5; }
 .ef-menu .nav-item:nth-child(7) { --i: 6; }
 .ef-menu .nav-item:nth-child(8) { --i: 7; }
-
-

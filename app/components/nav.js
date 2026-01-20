@@ -225,10 +225,26 @@ export default function Navigation() {
         .ef-nav.ef-hide{ transform: translateY(calc(-1 * var(--h))); }
 
         /* ===== Collapse ที่เราคุมเอง ===== */
-        @media (max-width: 991.98px){
-          .ef-collapse{ display: none; background: rgba(255,255,255,.95); border-radius: 12px; padding: .4rem; margin-top:.5rem; }
-          .ef-collapse.show{ display: block; }
+        @media (max-width: 768px){
+          /* Fix: overlay panel avoids layout shift and the fixed nav height. */
+          .ef-collapse{
+            position: absolute; left: 0; right: 0; top: calc(100% + 8px);
+            display: block; background: rgba(255,255,255,.95);
+            border-radius: 12px; padding: .5rem; margin-top: 0;
+            box-shadow: 0 10px 24px rgba(0,0,0,.08);
+            max-height: 0; overflow: hidden;
+            opacity: 0; pointer-events: none;
+            transform: translateY(-6px);
+            transition: max-height .2s ease, opacity .2s ease, transform .2s ease;
+            z-index: 1060;
+          }
+          .ef-collapse.show{
+            max-height: calc(100vh - var(--h) - 16px);
+            opacity: 1; pointer-events: auto; transform: translateY(0);
+          }
+          .ef-menu{ flex-direction: column; align-items: stretch; }
           .ef-menu .ef-link{ padding: .7rem .9rem }
+          .ef-toggler{ display: inline-flex; }
           /* backdrop ด้านหลังเมนู */
           .ef-backdrop{
             position: fixed; inset:0; background: rgba(0,0,0,.12);
@@ -236,8 +252,10 @@ export default function Navigation() {
           }
           .ef-backdrop.show{ opacity:1; pointer-events: auto; }
         }
-        @media (min-width: 992px){
-          .ef-collapse{ display: flex !important; }
+        @media (min-width: 769px){
+          /* Fix: show inline menu and hide hamburger above mobile width. */
+          .ef-collapse{ display: flex; }
+          .ef-toggler{ display: none; }
           .ef-backdrop{ display:none; }
         }
 
