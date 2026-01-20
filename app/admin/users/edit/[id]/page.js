@@ -30,8 +30,8 @@ export default function Page() {
   const [address, setAddress]     = useState('')
   const [sex, setSex]             = useState('')   // ชาย/หญิง/ไม่ระบุ
   const [birthday, setBirthday]   = useState('')   // YYYY-MM-DD
-  const [password, setPassword]   = useState('')
-
+  const [currentPassword, setCurrentPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
   const [loading, setLoading]     = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [showPw, setShowPw]       = useState(false)
@@ -47,13 +47,12 @@ export default function Page() {
   // password strength (0-4)
   const pwdStrength = useMemo(() => {
     let s = 0
-    if (password.length >= 8) s++
-    if (/[A-Zก-ฮ]/.test(password)) s++
-    if (/[0-9]/.test(password)) s++
-    if (/[^A-Za-z0-9]/.test(password)) s++
+    if (newPassword.length >= 8) s++
+    if (/[A-Z\u0E01-\u0E2E]/.test(newPassword)) s++
+    if (/[0-9]/.test(newPassword)) s++
+    if (/[^A-Za-z0-9]/.test(newPassword)) s++
     return s
-  }, [password])
-
+  }, [newPassword])
   // dirty check
   const isDirty = useMemo(() => {
     if (!initialUser) return false
@@ -65,9 +64,9 @@ export default function Page() {
       (initialUser.address || '') !== address ||
       (initialUser.sex || '') !== sex ||
       toInputDate(initialUser.birthday || '') !== birthday ||
-      initialUser.password !== password
+      newPassword.length > 0
     )
-  }, [initialUser, firstname, fullname, lastname, username, address, sex, birthday, password])
+  }, [initialUser, firstname, fullname, lastname, username, address, sex, birthday, newPassword])
 
   useEffect(() => {
     async function getUser() {
@@ -84,7 +83,8 @@ export default function Page() {
         setAddress(user.address || '')
         setSex(user.sex || '')
         setBirthday(toInputDate(user.birthday || ''))
-        setPassword(user.password || '')
+        setCurrentPassword(user.password || '')
+        setNewPassword('')
       } catch (err) {
         console.error('Error fetching data:', err)
         Swal.fire({ icon: 'error', title: 'ข้อผิดพลาดเครือข่าย', text: err?.message || 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้' })
@@ -104,7 +104,8 @@ export default function Page() {
     setAddress(initialUser.address || '')
     setSex(initialUser.sex || '')
     setBirthday(toInputDate(initialUser.birthday || ''))
-    setPassword(initialUser.password || '')
+    setCurrentPassword(initialUser.password || '')
+    setNewPassword('')
   }
 
   const handleUpdateSubmit = async (e) => {
@@ -112,14 +113,16 @@ export default function Page() {
     setSubmitting(true)
     try {
       // ✅ PUT ไปที่ /users (ตามที่ให้มา) โดยส่ง id ใน body
+      const body = {
+        id, firstname, fullname, lastname, username,
+        address, sex, birthday
+      }
+      if (newPassword.length > 0) body.password = newPassword
+
       await apiRequest(USERS_API, {
         method: 'PUT',
-        body: {
-          id, firstname, fullname, lastname, username,
-          address, sex, birthday, password
-        }
+        body
       })
-
       await Swal.fire({
         icon: 'success',
         title: '<h3>ปรับปรุงข้อมูลเรียบร้อยแล้ว</h3>',
@@ -260,16 +263,33 @@ export default function Page() {
                 className="control"
               />
             </div>
-
             {/* Password */}
             <div className="field">
-              <label>รหัสผ่าน (Password)</label>
+              <label>รหัสผ่านเดิม</label>
               <div className="with-suffix">
                 <input
                   type={showPw ? 'text' : 'password'}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="อย่างน้อย 8 ตัวอักษร"
+                  value={currentPassword}
+                  readOnly
+                  autoComplete="current-password"
+                  placeholder="ไม่พบรหัสเดิม"
+                  className="control"
+                />
+                <button type="button" className="btn small ghost" onClick={() => setShowPw((s) => !s)}>
+                  {showPw ? 'ซ่อน' : 'แสดง'}
+                </button>
+              </div>
+            </div>
+
+            <div className="field">
+              <label>รหัสผ่านใหม่</label>
+              <div className="with-suffix">
+                <input
+                  type={showPw ? 'text' : 'password'}
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  autoComplete="new-password"
+                  placeholder="เว้นว่างเพื่อใช้รหัสเดิม"
                   className="control"
                 />
                 <button type="button" className="btn small ghost" onClick={() => setShowPw((s) => !s)}>
