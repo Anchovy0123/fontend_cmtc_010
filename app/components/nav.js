@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Swal from '@/lib/swal';
+import { logout } from '@/lib/auth';
 
 export default function Navigation() {
   const router = useRouter();
@@ -105,7 +106,11 @@ export default function Navigation() {
       confirmButtonColor: '#d33',
     });
     if (!res.isConfirmed) return;
-    localStorage.removeItem('token');
+    try {
+      await logout();
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
     localStorage.removeItem('role');
     setAuthed(false);
     await Swal.fire({ title: 'ออกจากระบบแล้ว', icon: 'success', timer: 900, showConfirmButton: false });

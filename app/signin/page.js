@@ -3,10 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Swal from '@/lib/swal';
-import { apiRequest, setAuthToken } from '@/lib/apiClient';
-import { API_BASE } from '@/lib/api';
-
-const API_ROOT = API_BASE.replace(/\/+$/, '').replace(/\/api$/, '');
+import { login } from '@/lib/auth';
 
 export default function SignInPage(){
   const router = useRouter();
@@ -19,13 +16,8 @@ export default function SignInPage(){
     e.preventDefault();
     try{
       setLoading(true);
-      const data = await apiRequest(`${API_ROOT}/api/auth/login`, {
-        method:'POST',
-        body: { username, password },
-        auth: false,
-      });
+      const data = await login({ username, password });
       if(data?.token){
-        setAuthToken(data.token);
         await Swal.fire({ icon:'success', title:'<h3>Login Successfully!</h3>', timer:1200, showConfirmButton:false });
         window.location.href = '/admin/users';
       }else{

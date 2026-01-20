@@ -2,15 +2,12 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Swal from '@/lib/swal';
-import { apiRequest } from '@/lib/apiClient';
-import { API_BASE } from '@/lib/api';
+import { register } from '@/lib/auth';
 
 const initialForm = {
   firstname:'', fullname:'', lastname:'', username:'',
   address:'', sex:'', birthday:'', password:''
 };
-
-const API_ROOT = API_BASE.replace(/\/+$/, '').replace(/\/api$/, '');
 
 export default function RegisterPage(){
   const router = useRouter();
@@ -23,11 +20,7 @@ export default function RegisterPage(){
     e.preventDefault();
     try{
       setLoading(true);
-      await apiRequest(`${API_ROOT}/api/auth/register`, {
-        method:'POST',
-        body: form,
-        auth: false,
-      });
+      await register(form);
       await Swal.fire({ icon:'success', title:'<h3>บันทึกข้อมูลเรียบร้อยแล้ว</h3>', timer:1600, showConfirmButton:false });
       router.push('/login');
     }catch(error){
