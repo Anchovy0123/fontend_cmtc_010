@@ -218,9 +218,7 @@ export default function ServicePage() {
   return (
     <div ref={rootRef} className="service-screen ef-light">
       {/* BG layers */}
-      <video className="bg-video" autoPlay muted loop playsInline>
-        <source src="/videos/endfield-hero.mp4" type="video/mp4" />
-      </video>
+      <div className="bg-image" aria-hidden />
       <canvas ref={canvasRef} className="fx-canvas" aria-hidden />
 
       {/* HERO */}
@@ -392,7 +390,10 @@ export default function ServicePage() {
           mix-blend-mode: overlay;
         }
 
-        .bg-video{ position:fixed; inset:0; width:100%; height:100%; object-fit:cover; opacity:.10; z-index:-3; }
+        .bg-image{
+          position:fixed; inset:0; width:100%; height:100%; opacity:.10; z-index:-3;
+          background: #e6e9ee url('/images/sliders/1737537552775_arknights-endfield-r.jpg') center/cover no-repeat;
+        }
         .fx-canvas{ position:fixed; inset:0; z-index:-1; pointer-events:none; }
         .service-screen{ min-height:100vh; overflow-x:hidden; font-family: var(--font-kanit), system-ui, -apple-system; }
         .container{ width:min(1200px,92%); margin:0 auto; position:relative; z-index:1; }

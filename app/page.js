@@ -61,20 +61,7 @@ export default function Home() {
     <div ref={homeRef} className="ef-home ak-yellow">
       {/* ===== HERO ===== */}
       <section ref={heroRef} className="ef-hero" aria-label="Arknights: Endfield">
-        <video
-          className="ef-hero-video"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster="/images/rhodes-fallback.png"
-        >
-          <source
-            src="/video/Arknights Endfield Beta Test Trailer - Arknights Endfield (1080p, h264).mp4"
-            type="video/mp4"
-          />
-        </video>
+        <div className="ef-hero-image" aria-hidden />
 
         <div className="ef-hero-overlay" aria-hidden />
         <div className="ef-hero-topfade" aria-hidden />
@@ -114,11 +101,12 @@ export default function Home() {
         @supports not (height: 100svh){
           .ef-hero{ height: calc(100vh + var(--navH, 76px)); }
         }
-        .ef-hero-video{
+        .ef-hero-image{
           position:absolute; inset:0;
-          width:100%; height:100%; object-fit:cover;
+          width:100%; height:100%;
           z-index:-3; pointer-events:none;
           transform: scale(1.02);
+          background: #e6e9ee url('/images/74d249bb256c8e8795fbeb76605fbddb.jpg') center/cover no-repeat;
         }
         .ef-hero-overlay{
           position:absolute; inset:0; z-index:-2; pointer-events:none;
@@ -167,10 +155,10 @@ export default function Home() {
 
         @media (max-width: 991.98px){
           .ef-section{ padding: 28px 0; }
-          .ef-hero-video{ transform: none; }
+          .ef-hero-image{ transform: none; }
         }
         @media (prefers-reduced-motion: reduce){
-          .ef-hero-video{ transform:none; }
+          .ef-hero-image{ transform:none; }
           .ef-hero-scanline, .ef-arrow{ animation: none; }
         }
       `}</style>
